@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>SAIDELibrary Admin</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        body {
+            display: flex;
+            background: #ecf0f5;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 230px;
+            height: 100vh;
+            background: #222d32;
+            color: white;
+            position: fixed;
+        }
+
+        .brand {
+            background: #f39c12;
+            padding: 20px;
+            font-weight: bold;
+            font-size: 20px;
+            text-align: center;
+        }
+
+        .user-panel {
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            border-bottom: 1px solid #374850;
+        }
+
+        .user-panel i {
+            font-size: 40px;
+            margin-right: 10px;
+        }
+
+        .nav-item {
+            padding: 15px 20px;
+            cursor: pointer;
+            color: #b8c7ce;
+            display: block;
+            text-decoration: none;
+        }
+
+        .nav-item:hover {
+            background: #1e282c;
+            color: white;
+            border-left: 3px solid #f39c12;
+        }
+
+        /* Content */
+        .main-content {
+            margin-left: 230px;
+            flex: 1;
+        }
+
+        .header {
+            background: #f39c12;
+            height: 60px;
+            width: 100%;
+        }
+
+        .dashboard-header {
+            padding: 20px;
+            font-size: 24px;
+            color: #333;
+        }
+
+        /* Grid Cards */
+        .card-container {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            padding: 20px;
+        }
+
+        .card {
+            color: white;
+            padding: 20px;
+            border-radius: 3px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card h3 {
+            font-size: 38px;
+            margin-bottom: 5px;
+        }
+
+        .card i {
+            position: absolute;
+            right: 10px;
+            top: 20px;
+            font-size: 60px;
+            opacity: 0.3;
+        }
+
+        .card .footer {
+            background: rgba(0, 0, 0, 0.1);
+            padding: 5px;
+            margin: 20px -20px -20px;
+            text-align: center;
+            font-size: 13px;
+        }
+
+        .bg-blue {
+            background: #00c0ef;
+        }
+
+        .bg-green {
+            background: #00a65a;
+        }
+
+        .bg-yellow {
+            background: #f39c12;
+        }
+
+        .bg-red {
+            background: #dd4b39;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="sidebar">
+        <div class="brand">SAIDELibrary</div>
+        <div class="user-panel">
+            <i class="fa fa-user-circle"></i>
+            <div>ronald <br> <span style="font-size: 10px; color: #00ff00;">● Online</span></div>
+        </div>
+        <a href="#" class="nav-item"><i class="fa fa-dashboard"></i> Dashboard</a>
+        <a href="#" class="nav-item"><i class="fa fa-users"></i> Members</a>
+        <a href="#" class="nav-item"><i class="fa fa-book"></i> Books</a>
+    </div>
+
+    <div class="main-content">
+        <div class="header"></div>
+        <div class="dashboard-header">SAIDE Library <span style="font-size: 14px; color: #777;">Control Panel</span>
+        </div>
+
+        <div class="card-container">
+            <div class="card bg-blue">
+                <h3 id="stat-books">0</h3>
+                <p>Books</p> <i class="fa fa-book"></i>
+                <div class="footer">More info <i class="fa fa-arrow-circle-right"></i></div>
+            </div>
+            <div class="card bg-green">
+                <h3 id="stat-members">0</h3>
+                <p>Members</p> <i class="fa fa-users"></i>
+                <div class="footer">More info <i class="fa fa-arrow-circle-right"></i></div>
+            </div>
+            <div class="card bg-yellow">
+                <h3 id="stat-news">0</h3>
+                <p>NewsPapers</p> <i class="fa fa-newspaper"></i>
+                <div class="footer">More info <i class="fa fa-arrow-circle-right"></i></div>
+            </div>
+            <div class="card bg-red">
+                <h3 id="stat-issued">0</h3>
+                <p>Issued</p> <i class="fa fa-paper-plane"></i>
+                <div class="footer">More info <i class="fa fa-arrow-circle-right"></i></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        fetch('http://127.0.0.1:5000/api/stats')
+            .then(res => res.json())
+            .then(data => {
+                document.getElementById('stat-books').innerText = data.total_books;
+                document.getElementById('stat-members').innerText = data.members;
+                document.getElementById('stat-news').innerText = data.newspapers;
+                document.getElementById('stat-issued').innerText = data.issued_books;
+            });
+    </script>
+</body>
+
+</html>
